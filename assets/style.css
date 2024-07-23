@@ -1,0 +1,19 @@
+:root{
+    margin: 0;
+    padding: 0;
+}
+
+.title{
+    background-color: rgb(121, 121, 224);
+    height: 110px;
+}
+
+.search-hist-container {
+    background-color: red;
+    height: 90vh;
+}
+
+.forecast-container {
+    background-color: green;
+    height: 90vh;
+}

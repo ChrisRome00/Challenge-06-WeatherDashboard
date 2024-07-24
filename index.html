@@ -19,19 +19,76 @@
                     <form id="search-form" class="serch-area">
                         <label for="search" class="form-label"><h2>Search for a City:</h2></label><br />
                         <input name="search" type="text" id="search" placeholder="Del Valle"><br />
-                        <button type="submit" class="btn">Search</button>
+                        <button type="submit" class="btn search-btn">Search</button>
                     </form>
                     
                 </div>
                 <hr class="search-hist-split">
                 <div class="search-history-container">
-                    history
+                    <button class="btn clear-btn" id="clear-history">Clear History</button>
                 </div>
             </div>
 
             <div class="col-9 forecast-container">
-              <div class="col-12 city-today-container">city-Today-Container</div>
-              <div class="col-12 city-forecast-container">city-Forecast-Container</div>
+
+
+                <div id="todays-Forecast" class="col-11 city-today-container card">
+                    <div class="card-header">
+                        <p class="city">Austin</p>
+                        <p class="today-date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                </div>
+
+
+                
+                <h2>5-Day Forecast: </h2>
+                <div id="ahead-forecast" class="col-11 city-forecast-container">
+                    
+                    <div class="newCard card">
+                        <p class="date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                    <div class="newCard card">
+                        <p class="date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                    <div class="newCard card">
+                        <p class="date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                    <div class="newCard card">
+                        <p class="date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                    <div class="newCard card">
+                        <p class="date">(7/23/2024)</p>
+                        <p class="icon">☀️</p>
+                        <p class="temp">Temp: 100°F</p>
+                        <p class="wind">Wind: 4.23 MPH</p>
+                        <p class="humidity">Humidity: 33%</p>
+                    </div>
+                    
+
+                </div>
+
             </div>
     
         </div>

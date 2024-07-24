@@ -13,8 +13,21 @@
     <div class="page-container">
         <div class="row content">
 
-            <div class="col-12 title">Title</div>
-            <div class="col-3 search-hist-container">search-and-Histor-Container</div>
+            <div class=" title">Weather Dashboard</div>
+            <div class="col-3 search-container">
+                <div class="search-location-container">
+                    <form id="search-form" class="serch-area">
+                        <label for="search" class="form-label"><h2>Search for a City:</h2></label><br />
+                        <input name="search" type="text" id="search" placeholder="Del Valle"><br />
+                        <button type="submit" class="btn">Search</button>
+                    </form>
+                    
+                </div>
+                <hr class="search-hist-split">
+                <div class="search-history-container">
+                    history
+                </div>
+            </div>
 
             <div class="col-9 forecast-container">
               <div class="col-12 city-today-container">city-Today-Container</div>

@@ -4,7 +4,8 @@ let cityList = JSON.parse(localStorage.getItem("cities"));
 const searchFormEl = document.querySelector("#search-form");
 const searchInputEl = document.querySelector("#search");
 const searchHistContainer = document.querySelector(".reverse-container");
-const todayForecastContainer = document.querySelector("#todays-forecast");
+//const histButton = document.querySelectorAll(".hist-btn");
+const todaysForecastContainer = document.querySelector("#todays-forecast");
 const futureForeCastContainer = document.querySelector("#ahead-forecast");
 
 
@@ -12,8 +13,8 @@ const futureForeCastContainer = document.querySelector("#ahead-forecast");
 const weatherApiKey = "cb99c2d46a5951373626c3a6c3bae944";
 
 function renderHistoryButtons() {
-    console.log(cityList.length);
-    console.log(cityList[0].cityName);
+    //console.log(cityList.length);
+    //console.log(cityList[0].cityName);
     for (let i = 0; i < cityList.length; i++) {
         let newBtn = document.createElement("button");
         newBtn.classList.add("hist-btn", "btn");
@@ -53,7 +54,7 @@ function getCitydata(cityName) {
             //Create History button - createHistButton(cityInfo)
             createHistoryButton(cityInfo);
             //Create Todays City Card - createTodaysCard(cityInfo)
-            
+            createTodaysCityCard(cityInfo);
             //Create 5 day forcast - createForecast idrk how this one works yet
         })
         .catch(function (error) {
@@ -67,16 +68,44 @@ function createHistoryButton(cityInfo) {
     cityList.push(city);
     localStorage.setItem("cities", JSON.stringify(cityList));
 
-
     let newBtn = document.createElement("button");
-    newBtn.classList.add("hist-btn", "btn");
+    newBtn.classList.add("btn", "hist-btn");
     newBtn.textContent = cityInfo.name;
     searchHistContainer.appendChild(newBtn);
-    //default temp = Math.round( (((cityInfo.main.temp - 273.15) * 1.8) + 32) * 100) / 100
-    // console.log(Math.round((((cityInfo.main.temp - 273.15) * 1.8) + 32) * 10) / 10);
-    // console.log(cityInfo.name);
-    // console.log(cityInfo.name);
 }
+
+function createTodaysCityCard(cityInfo) {
+    todaysForecastContainer.innerHTML = "";
+    //const todaysForecastContainer = document.querySelector("#todays-forecast"); <- Append here
+    //console.log(cityInfo);
+    const name = cityInfo.name;
+    const date = new Date(cityInfo.dt * 1000).toDateString();
+    
+    const weatherIcon = cityInfo.weather[0].icon;
+    const temperature = Math.round((((cityInfo.main.temp - 273.15) * 1.8) + 32) * 10) / 10;
+    const wind = Math.round((cityInfo.wind.speed * 2.23694) * 10) / 10;
+    const humidity = cityInfo.main.humidity;
+    
+
+    const newCard = document.createElement("div");
+    newCard.classList.add("card-header");
+    newCard.innerHTML = 
+                        `<h2 class="city">${name}</h2>` + `&nbsp;` +
+                        `<p class="today-date">(${date})</p>` + `  ` +
+                        `<img class="icon" src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png" style="margin-top: -25px;">`;
+
+    todaysForecastContainer.appendChild(newCard);
+
+    const newCardPt2 = document.createElement("div");
+    newCardPt2.classList.add("card-body");
+    newCardPt2.innerHTML = 
+                            `<p class="temp">Temp:&nbsp;${temperature}°F</p>` +
+                            `<p class="wind">Wind:&nbsp;${wind} MPH</p>` +
+                            `<p class="humidity">Humidity:&nbsp;${humidity}%</p>`;
+    todaysForecastContainer.appendChild(newCardPt2);
+
+        
+};
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -92,5 +121,5 @@ document.addEventListener("DOMContentLoaded", function () {
     //Clicking on "clear history"
 
     //Clicking on a history button
-
+    //histButton.addEventListener("click", function(event) {event.this;});
 });

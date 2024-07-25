@@ -91,9 +91,9 @@ h2{
 .hist-btn {
     /* Give this to future created history buttons */
     width: 100%;
-    background-color: rgb(50, 67, 82);
+    background-color: rgb(174, 177, 181);
     height: 50px;
-    color: rgb(240, 235, 235);
+    color: rgb(0, 0, 0);
     font-size: 25px;
     margin-top: 10px;
 }
@@ -123,15 +123,20 @@ h2{
     padding: 20px;
     border: 2px solid black;
 }
+
 .card-header {
     display: inline-flex;
     font-size: 40px;
     font-weight: 600;
+    --bs-card-cap-bg: none;
 }
+
+
 
 .card-body {
     font-size: 25px;
 }
+
 
 /* ----------------------- */
 /* Future Forecast */

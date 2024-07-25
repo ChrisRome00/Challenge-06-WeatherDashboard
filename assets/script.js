@@ -3,8 +3,9 @@ let cityList = JSON.parse(localStorage.getItem("cities"));
 
 const searchFormEl = document.querySelector("#search-form");
 const searchInputEl = document.querySelector("#search");
+const deleteHistButton = document.querySelector("#clear-history");
 const searchHistContainer = document.querySelector(".reverse-container");
-//const histButton = document.querySelectorAll(".hist-btn");
+const buttons = document.querySelectorAll(".hist-btn");
 const todaysForecastContainer = document.querySelector("#todays-forecast");
 const futureForeCastContainer = document.querySelector("#ahead-forecast");
 
@@ -56,6 +57,31 @@ function getCitydata(cityName) {
             //Create Todays City Card - createTodaysCard(cityInfo)
             createTodaysCityCard(cityInfo);
             //Create 5 day forcast - createForecast idrk how this one works yet
+            create5DayForecast(cityInfo.name);
+        })
+        .catch(function (error) {
+            alert("Unable to connect to WeatherAPI!")
+        });
+}
+
+function getCitydataFromHist(cityName) {
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${weatherApiKey}`;
+    fetch(queryURL)
+        .then(function (response) {
+            if(response.ok) {
+                return response.json();
+            } else {
+                alert(`Error:${response.statusText}`);
+            }
+        })
+        .then(function (cityInfo) {
+            
+            // DONT WANT TO CREATE HISTORY BUTTON OR STORE IN LOCAL
+            // BUT, we still want to get that days info and forecast
+            //Create Todays City Card - createTodaysCard(cityInfo)
+            createTodaysCityCard(cityInfo);
+            //Create 5 day forcast - createForecast idrk how this one works yet
+            create5DayForecast(cityInfo.name);
         })
         .catch(function (error) {
             alert("Unable to connect to WeatherAPI!")
@@ -70,8 +96,17 @@ function createHistoryButton(cityInfo) {
 
     let newBtn = document.createElement("button");
     newBtn.classList.add("btn", "hist-btn");
+    newBtn.setAttribute('id', cityInfo.name)
     newBtn.textContent = cityInfo.name;
     searchHistContainer.appendChild(newBtn);
+    
+    //Once button is created, lets add a event listener attatched to it!
+    newBtn.addEventListener('click', () => {
+        //console.log(newBtn.textContent);
+        todaysForecastContainer.innerHTML = ""; // Clear forecast container
+        getCitydataFromHist(cityInfo.name); 
+    });
+
 }
 
 function createTodaysCityCard(cityInfo) {
@@ -107,6 +142,11 @@ function createTodaysCityCard(cityInfo) {
         
 };
 
+function create5DayForecast(cityName) {
+    //may need to call another api for 5 days
+    console.log(cityName);
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     //get city list or create a new list
@@ -119,7 +159,11 @@ document.addEventListener("DOMContentLoaded", function () {
     searchFormEl.addEventListener('submit', formSubmitHandler);
 
     //Clicking on "clear history"
+    deleteHistButton.addEventListener('click', function () {
+        //clear local storage
+        localStorage.clear();
+        //force reload of page to completely clear local storage
+        location.reload();
+    })
 
-    //Clicking on a history button
-    //histButton.addEventListener("click", function(event) {event.this;});
 });

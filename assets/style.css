@@ -95,6 +95,12 @@ h2{
     height: 50px;
     color: rgb(240, 235, 235);
     font-size: 25px;
+    margin-top: 10px;
+}
+
+.reverse-container{
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 /* --------------------- */

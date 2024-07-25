@@ -144,13 +144,14 @@ function createTodaysCityCard(cityInfo) {
 
 function create5DayForecast(cityName) {
     //may need to call another api for 5 days
-    console.log(cityName);
+    //console.log(cityName);
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
     //get city list or create a new list
     cityList = cityList || [];
+    console.log(cityList.length)
 
     // Render the history
     renderHistoryButtons();
@@ -165,5 +166,20 @@ document.addEventListener("DOMContentLoaded", function () {
         //force reload of page to completely clear local storage
         location.reload();
     })
+
+    // Now if page refreshes, upon reload, our prev created buttons are clickable
+    if (cityList.length > 0) {
+        let buttons = document.querySelectorAll(".hist-btn");
+    
+        // Iterate over each button and add an event listener
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                //console.log(this.textContent);
+                cityName = this.textContent;
+                getCitydataFromHist(cityName);
+            });
+        });
+    }
+    
 
 });

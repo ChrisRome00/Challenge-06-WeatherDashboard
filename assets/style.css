@@ -119,6 +119,7 @@ h2{
 /* Today's Forecast */
 .city-today-container {
     height: 300px;
+    max-height: auto;
     /* background-color: yellow; */
     margin: 30px 0px 30px 0px;
     padding: 20px;
@@ -126,13 +127,15 @@ h2{
 }
 
 .card-header {
-    display: inline-flex;
+    display: flex;
     font-size: 40px;
     font-weight: 600;
     --bs-card-cap-bg: none;
 }
 
-
+.icon {
+    margin-top: -25px;
+}
 
 .card-body {
     font-size: 25px;
@@ -145,10 +148,12 @@ h2{
     height: 50%;
     /* background-color: aqua; */
     display: flex;
+    flex-direction: row;
     height: auto;
     min-height: 250px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    
 }
 
 .newCard {
@@ -157,6 +162,7 @@ h2{
     padding: 10px;
     background-color: rgb(57, 57, 95);
     color: white;
+    margin: 10px 20px 10px 20px;
 }
 
 .icons{
@@ -169,9 +175,72 @@ h2{
 }
 
 /* ----------------------- */
+@media (max-width: 1170px) {
+    .col-3 {
+        width: 100%;
+    }
+    .col-9 {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-container {
+        /* background-color: red; */
+        height: auto;
+        
+    }
+}
+
+@media (max-width: 890px) {
+    .title {
+        font-size: 60px;
+    }
+}
 
 @media (max-width: 760px) {
     .title {
-        /* font-size: 50px; */
+        font-size: 50px;
+    }
+    .card-header {
+        display: flex;
+        flex-direction: row;
+        
+    }
+    .card-header > h2 {
+        font-size: 40px;
+        
+    }
+    .card-header > p {
+        font-size: 20px;
+        padding-top: 10px;
+    }
+    
+}
+
+@media (max-width: 512px) {
+    .title {
+        font-size: 30px;
+    }
+    .card-header {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .card-header > h2 {
+        font-size: 40px;
+        
+        
+    }
+    .card-header > p {
+        font-size: 20px;
+        margin-top: -80px;
+    }
+    .icon {
+        display: inline-flex;
+        width: 60px;
+        height: 60px;
+        margin-top: -60px;
+        margin-left: 200px
     }
 }

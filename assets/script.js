@@ -58,7 +58,8 @@ function getCitydata(cityName) {
             //Create Todays City Card - createTodaysCard(cityInfo)
             createTodaysCityCard(cityInfo);
             //Acting as both getting data then creating 5 day forecast
-            //create5DayForecast(cityInfo.name);
+            futureForecastContainer.innerHTML = "";
+            get5DayForecast(cityInfo.name);
         })
         .catch(function (error) {
             alert("Unable to connect to WeatherAPI!")
@@ -84,6 +85,7 @@ function getCitydataFromHist(cityName) {
             //Create 5 day forcast - createForecast idrk how this one works yet
             //ACting as both getting data then creating 5 day forecast
             //console.log(cityInfo.name); // passes string name of city
+            futureForecastContainer.innerHTML = "";
             get5DayForecast(cityInfo.name);
         })
         .catch(function (error) {
@@ -130,7 +132,7 @@ function createTodaysCityCard(cityInfo) {
     newCard.innerHTML = 
                         `<h2 class="city">${name}</h2>` + `&nbsp;` +
                         `<p class="today-date">(${date})</p>` + `  ` +
-                        `<img class="icon" src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png" style="margin-top: -25px;">`;
+                        `<img class="icon" src="http://openweathermap.org/img/wn/${weatherIcon}@2x.png">`;
 
     todaysForecastContainer.appendChild(newCard);
 

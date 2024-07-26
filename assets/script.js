@@ -7,7 +7,7 @@ const deleteHistButton = document.querySelector("#clear-history");
 const searchHistContainer = document.querySelector(".reverse-container");
 const buttons = document.querySelectorAll(".hist-btn");
 const todaysForecastContainer = document.querySelector("#todays-forecast");
-const futureForeCastContainer = document.querySelector("#ahead-forecast");
+const futureForecastContainer = document.querySelector("#ahead-forecast");
 
 
 //API Key
@@ -41,7 +41,8 @@ const formSubmitHandler = function (event) {
 }
 
 function getCitydata(cityName) {
-    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${weatherApiKey}`;
+    //API call, include units query param to imperial
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${weatherApiKey}`;
     fetch(queryURL)
         .then(function (response) {
             if(response.ok) {
@@ -56,8 +57,8 @@ function getCitydata(cityName) {
             createHistoryButton(cityInfo);
             //Create Todays City Card - createTodaysCard(cityInfo)
             createTodaysCityCard(cityInfo);
-            //Create 5 day forcast - createForecast idrk how this one works yet
-            create5DayForecast(cityInfo.name);
+            //Acting as both getting data then creating 5 day forecast
+            //create5DayForecast(cityInfo.name);
         })
         .catch(function (error) {
             alert("Unable to connect to WeatherAPI!")
@@ -65,7 +66,7 @@ function getCitydata(cityName) {
 }
 
 function getCitydataFromHist(cityName) {
-    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${weatherApiKey}`;
+    const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${weatherApiKey}`;
     fetch(queryURL)
         .then(function (response) {
             if(response.ok) {
@@ -81,7 +82,9 @@ function getCitydataFromHist(cityName) {
             //Create Todays City Card - createTodaysCard(cityInfo)
             createTodaysCityCard(cityInfo);
             //Create 5 day forcast - createForecast idrk how this one works yet
-            create5DayForecast(cityInfo.name);
+            //ACting as both getting data then creating 5 day forecast
+            //console.log(cityInfo.name); // passes string name of city
+            get5DayForecast(cityInfo.name);
         })
         .catch(function (error) {
             alert("Unable to connect to WeatherAPI!")
@@ -117,8 +120,8 @@ function createTodaysCityCard(cityInfo) {
     const date = new Date(cityInfo.dt * 1000).toDateString();
     
     const weatherIcon = cityInfo.weather[0].icon;
-    const temperature = Math.round((((cityInfo.main.temp - 273.15) * 1.8) + 32) * 10) / 10;
-    const wind = Math.round((cityInfo.wind.speed * 2.23694) * 10) / 10;
+    const temperature = cityInfo.main.temp;
+    const wind = cityInfo.wind.speed;
     const humidity = cityInfo.main.humidity;
     
 
@@ -142,9 +145,44 @@ function createTodaysCityCard(cityInfo) {
         
 };
 
-function create5DayForecast(cityName) {
+function get5DayForecast(cityName) {
     //may need to call another api for 5 days
-    //console.log(cityName);
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${weatherApiKey}`;
+    fetch(forecastUrl)
+        .then(function (response) {
+            if(response.ok) {
+                return response.json();
+            } else {
+                alert(`Error:${response.statusText}`);
+            }
+        })
+        .then(function (cityInfo) {
+            console.log(cityInfo);
+
+            for(let i = 7; i < 40; i += 8) {
+                const card = document.createElement("div");
+                card.classList.add("newCard", "card");
+
+                const unixtime = cityInfo.list[i].dt; 
+                const date = new Date(unixtime * 1000).toDateString();
+                const icon = cityInfo.list[i].weather[0].icon;
+                const temp = cityInfo.list[i].main.temp;
+                const wind = cityInfo.list[i].wind.speed;
+                const humidity = cityInfo.list[i].main.humidity;
+
+                card.innerHTML = 
+                               `<p class="date">${date}</p>
+                                <img class="icons" src="http://openweathermap.org/img/wn/${icon}.png">
+                                <p class="temp">Temp: ${temp}°F</p>
+                                <p class="wind">Wind: ${wind}MPH</p>
+                                <p class="humidity">Humidity: ${humidity}%</p>`;
+                                
+                futureForecastContainer.appendChild(card);
+            }
+        })
+        .catch(function (error) {
+            alert("Unable to connect to WeatherAPI!")
+        });
 }
 
 
@@ -175,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         buttons.forEach(button => {
             button.addEventListener('click', function () {
                 //console.log(this.textContent);
+                //take in the text content of the button and pass as a city name
                 cityName = this.textContent;
                 getCitydataFromHist(cityName);
             });
